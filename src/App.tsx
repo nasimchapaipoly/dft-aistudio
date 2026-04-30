@@ -966,8 +966,8 @@ export default function App() {
                   <ChevronRight size={14} className="text-slate-300" />
                 </button>
               </div>
-            </motion.div>
-          </>
+            <motion.div>
+      
         )}
       </AnimatePresence>
               
