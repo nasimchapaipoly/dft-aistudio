@@ -1,0 +1,22 @@
+[
+  {
+    "name_en": "Food Processing Lab",
+    "name_bn": "ফুড প্রসেসিং ল্যাব",
+    "desc_en": "Modern machines for food production.",
+    "desc_bn": "আধুনিক খাদ্য প্রক্রিয়াকরণ যন্ত্র।",
+    "images": [
+      "https://images.unsplash.com/photo-1581093458791-9d3f7f1c6f3b?auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1582719478181-2195c7f0d3cf?auto=format&fit=crop&q=80"
+    ]
+  },
+  {
+    "name_en": "Microbiology Lab",
+    "name_bn": "মাইক্রোবায়োলজি ল্যাব",
+    "desc_en": "Microorganism testing lab.",
+    "desc_bn": "অণুজীব পরীক্ষার ল্যাব।",
+    "images": [
+      "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80"
+    ]
+  }
+]

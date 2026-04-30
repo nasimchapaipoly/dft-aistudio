@@ -1,0 +1,9 @@
+{
+  "1": [
+    { "name": "Mathematics-1", "pdf": "pdf/math1.pdf" },
+    { "name": "Basic Science", "pdf": "pdf/science.pdf" }
+  ],
+  "2": [
+    { "name": "Food Chemistry", "pdf": "pdf/chem.pdf" }
+  ]
+}

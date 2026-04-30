@@ -1,0 +1,173 @@
+{
+  "entities": {
+    "Notice": {
+      "title": "Notice",
+      "description": "Departmental notices and announcements",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "format": "date", "description": "Date of announcement" },
+        "text_en": { "type": "string", "description": "Notice text in English" },
+        "text_bn": { "type": "string", "description": "Notice text in Bengali" },
+        "file": { "type": "string", "description": "Optional URL to attachment" }
+      },
+      "required": ["date", "text_en", "text_bn"]
+    },
+    "Person": {
+      "title": "Person",
+      "description": "Teachers and staff members",
+      "type": "object",
+      "properties": {
+        "name_en": { "type": "string" },
+        "name_bn": { "type": "string" },
+        "position_en": { "type": "string" },
+        "position_bn": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "mobile": { "type": "string" },
+        "image": { "type": "string" },
+        "type": { "type": "string", "enum": ["teacher", "staff"] }
+      },
+      "required": ["name_en", "name_bn", "position_en", "position_bn", "type"]
+    },
+    "Lab": {
+      "title": "Lab",
+      "description": "Laboratory facilities",
+      "type": "object",
+      "properties": {
+        "name_en": { "type": "string" },
+        "name_bn": { "type": "string" },
+        "desc_en": { "type": "string" },
+        "desc_bn": { "type": "string" },
+        "images": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["name_en", "name_bn", "desc_en", "desc_bn"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Student information used in lists",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "roll": { "type": "string" },
+        "registration": { "type": "string" },
+        "semester": { "type": "string" },
+        "shift": { "type": "string" },
+        "group": { "type": "string" },
+        "mobile": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "required": ["name", "roll", "registration", "semester", "shift", "group", "mobile"]
+    },
+    "StudentProfile": {
+      "title": "Student Profile",
+      "description": "Detailed student profile for CV and scholarship",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "basic": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "roll": { "type": "string" },
+            "registration": { "type": "string" },
+            "email": { "type": "string" },
+            "mobile": { "type": "string" },
+            "misId": { "type": "string" },
+            "dob": { "type": "string" },
+            "birthReg": { "type": "string" },
+            "nid": { "type": "string" },
+            "image": { "type": "string" }
+          }
+        },
+        "education": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "institution": { "type": "string" },
+              "exam": { "type": "string" },
+              "subject": { "type": "string" },
+              "board": { "type": "string" },
+              "result": { "type": "string" },
+              "year": { "type": "string" }
+            }
+          }
+        },
+        "parents": {
+          "type": "object",
+          "properties": {
+            "father": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "occupation": { "type": "string" },
+                "mobile": { "type": "string" },
+                "nid": { "type": "string" },
+                "dob": { "type": "string" }
+              }
+            },
+            "mother": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "occupation": { "type": "string" },
+                "mobile": { "type": "string" },
+                "nid": { "type": "string" },
+                "dob": { "type": "string" }
+              }
+            }
+          }
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "current": { "type": "string" },
+            "permanent": { "type": "string" }
+          }
+        },
+        "professional": {
+          "type": "object",
+          "properties": {
+            "objective": { "type": "string" },
+            "experience": { "type": "string" },
+            "certificates": { "type": "string" },
+            "languages": { "type": "string" }
+          }
+        },
+        "financial": {
+          "type": "object",
+          "properties": {
+            "bankName": { "type": "string" },
+            "accName": { "type": "string" },
+            "accNo": { "type": "string" },
+            "accNid": { "type": "string" },
+            "bkash": { "type": "string" },
+            "rocket": { "type": "string" }
+          }
+        }
+      },
+      "required": ["userId", "basic"]
+    }
+  },
+  "firestore": {
+    "notices": {
+      "schema": "Notice",
+      "description": "Collection of departmental notices"
+    },
+    "people": {
+      "schema": "Person",
+      "description": "Collection of teachers and staff"
+    },
+    "labs": {
+      "schema": "Lab",
+      "description": "Collection of lab facilities"
+    },
+    "students": {
+      "schema": "Student",
+      "description": "Collection of students (admin managed list)"
+    },
+    "student_profiles": {
+      "schema": "StudentProfile",
+      "description": "User profiles for students"
+    }
+  }
+}

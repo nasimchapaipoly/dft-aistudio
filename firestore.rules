@@ -1,0 +1,98 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == "mimmaevent2003@gmail.com" && 
+        request.auth.token.email_verified == true
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Notice Validation
+    function isValidNotice(data) {
+      return data.keys().hasAll(['date', 'text_en', 'text_bn']) &&
+             data.keys().size() >= 3 &&
+             data.date is string && data.date.size() <= 50 &&
+             data.text_en is string && data.text_en.size() <= 2000 &&
+             data.text_bn is string && data.text_bn.size() <= 2000;
+    }
+
+    match /notices/{noticeId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidNotice(request.resource.data);
+      allow update: if isAdmin() && isValidNotice(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Person Validation
+    function isValidPerson(data) {
+      return data.keys().hasAll(['name_en', 'name_bn', 'position_en', 'position_bn', 'type']) &&
+             data.name_en is string && data.name_en.size() <= 200 &&
+             data.type in ['teacher', 'staff'];
+    }
+
+    match /people/{personId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidPerson(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Lab Validation
+    function isValidLab(data) {
+      return data.keys().hasAll(['name_en', 'name_bn', 'desc_en', 'desc_bn']) &&
+             data.name_en is string && data.name_en.size() <= 200;
+    }
+
+    match /labs/{labId} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidLab(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Student Validation
+    function isValidStudent(data) {
+      return data.keys().hasAll(['name', 'roll', 'registration', 'semester', 'shift', 'group', 'mobile']) &&
+             data.name is string && data.name.size() <= 200 &&
+             data.roll is string && data.roll.size() <= 50;
+    }
+
+    match /students/{studentId} {
+      allow read: if isSignedIn(); // Allow all students to see list
+      allow create, update: if isAdmin() && isValidStudent(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Student Profile Validation
+    function isValidStudentProfile(data) {
+      return data.keys().hasAll(['userId', 'basic']) &&
+             data.userId == request.auth.uid &&
+             data.basic.name is string && data.basic.name.size() <= 200 &&
+             data.basic.email == request.auth.token.email;
+    }
+
+    match /student_profiles/{profileId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidStudentProfile(request.resource.data) && profileId == request.auth.uid;
+      allow update: if (isSignedIn() && request.auth.uid == resource.data.userId && isValidStudentProfile(request.resource.data)) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}
