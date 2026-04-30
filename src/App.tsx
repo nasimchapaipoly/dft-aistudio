@@ -966,23 +966,18 @@ export default function App() {
                   <ChevronRight size={14} className="text-slate-300" />
                 </button>
               </div>
-            <motion.div>
-      
-        )}
-      </AnimatePresence>
+          
               
               <div className="p-6 border-t border-gray-100 italic text-center">
                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest leading-relaxed">
                   Department of Food Technology<br/>CNPI Portal v2.0
                 </p>
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+          
+      
 
-      <AnimatePresence>
-        {selectedCourse && (
+      
+        
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <motion.div 
               initial={{ opacity: 0 }}
